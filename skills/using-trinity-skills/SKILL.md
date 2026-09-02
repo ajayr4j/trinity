@@ -3,9 +3,8 @@ name: using-trinity-skills
 description: Router for Enterprise-Bench (pm / crm / file-server) failure-mode skills. Load before every trial. Routes to atomic skills; contains no task-solving logic itself.
 metadata:
   type: router
-  methodology: ../../../Empirical Failure-Mode Cataloguing v1.md
-  see-also: ../../../ontology-engineering.md
-  evidence: ../../step1-findings.md
+  methodology: ../../methods/empirical-failure-cataloguing.md
+  evidence: ../../benchmarks/RESULTS.md
 ---
 
 # using-trinity-skills

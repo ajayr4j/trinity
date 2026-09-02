@@ -20,7 +20,7 @@ a filename that doesn't describe what the file actually contains. The
 dominant failure shape is: **the value or count returned is internally
 consistent and confidently wrong**, and nothing in the response itself flags
 that. Six such patterns have been confirmed empirically (see
-`../../step1-findings.md`) and are each routed to below as one atomic skill.
+`../../benchmarks/RESULTS.md`) and are each routed to below as one atomic skill.
 
 ## Systems in scope
 
@@ -94,26 +94,6 @@ that. Six such patterns have been confirmed empirically (see
 | Paginating past `nextPageToken` | file-server | [[pagination-token-verification]] | Finding 4 |
 | Selecting a file by title match | file-server | [[filename-content-mismatch]] | Finding 6 |
 
-## Relationship to ontology-engineering.md
-
-`../../../ontology-engineering.md` is a separate, complementary discipline
-(formal domain modeling — classes/properties/constraints validated via
-competency questions), referenced from the methodology doc itself
-(`Empirical Failure-Mode Cataloguing v1.md`, section 1e-bis) as the place to
-build a structural model of pm/crm/file-server's entities and relationships
-if the hierarchy/multi-hop checks above ever get too tangled to track by
-memory. It is not merged into this router's decision tree.
-
-## How this router is loaded
-
-```bash
-cd enterprise-bench/l1-l2-bench   # after make install/setup/build-image/start-servers
-harbor run -p tasks -a claude-code -m claude-opus-4-8 \
-  --mcp-config mcp.json \
-  --skill ../../trinity/trinity-harness/skills \
-  -k 10 -n 3 --yes
-```
-
 ## What this pack does not cover yet
 
 - Schema drift detection — this is a snapshot from one probe pass; if the
@@ -126,6 +106,8 @@ harbor run -p tasks -a claude-code -m claude-opus-4-8 \
 - `pm` wiki-page content traps beyond a basic list (only 5 pages exist; no
   snippet-truncation or content-mismatch behavior found there, unlike
   `file-server`).
-- No real trial run against this pack yet (Step 4) — every rule here traces
-  to a direct API probe, not a judged trial failure. First real trial run is
-  the next step, per the methodology's own definition of done.
+- Class (b) coverage. Every rule here traces to a direct API probe, not to a
+  judged trial failure. See `../../methods/empirical-failure-cataloguing.md`
+  section 1 for why that distinction is load-bearing, and
+  `../../benchmarks/RESULTS.md` for what happened when a probe-only pack was
+  run at full scale without clearing the small-batch checkpoint.

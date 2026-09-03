@@ -44,6 +44,11 @@ string match.
 | Claude Code, bare | open | DeepSeek V4 Pro (open) | 51.4% | 140 |
 | OpenCode, bare | open | DeepSeek V4 Pro (open) | 40.7% | 140 |
 
+Every Empirical Failure Cataloguing row above was run with the trial-derived pack,
+`skills/trial-derived/`, router `using-benchmark-skills`. The probe-only pack shipped alongside it
+in `skills/probe-only/` produced none of these numbers, and its own result is in the negative
+results below.
+
 ## Controlled deltas
 
 Each method is compared only against its own baseline, with harness family, model, tools and
@@ -75,11 +80,20 @@ than the model does.
 
 These matter more than the headline, because they are what the method's gates were written from.
 
-**A probe-only catalogue regressed at full scale.** A pack built entirely from exhaustive API
-probing, smoke-tested only at a single trial, scored **0.543** on a full 140-trial run. A prior
-pack that had been through a real trial-and-fix loop scored **0.79** on the same benchmark and
-the same model that same week. The catalogue had complete class (a) coverage and zero class (b)
-coverage, and the checklist being green said nothing about the latter. This is why
+**A probe-only catalogue regressed at full scale.** Both packs in this repo are published, and
+this is the run that separates them.
+
+`skills/probe-only/` (router `using-trinity-skills`, six leaves) was built entirely from
+exhaustive API probing against the benchmark's own MCP servers, and smoke tested only at a single
+trial. It scored **0.543** on a full 140-trial run on DeepSeek V4 Pro, with 8 exceptions.
+
+`skills/trial-derived/` (router `using-benchmark-skills`, ten leaves) had been through a real
+trial-and-fix loop. It scored **0.79** on the same benchmark, the same model and the same week,
+with 2 exceptions. It is also the pack behind every headline number in the main table above.
+
+The probe-only catalogue had complete class (a) coverage, the traps the system sets, and zero
+class (b) coverage, the traps the agent sets for itself. The checklist being green said nothing
+about the second kind, and a single-trial smoke test cannot distinguish them. This is why
 Method 1 makes the small-batch checkpoint a hard blocking gate rather than advice.
 
 **A tool with no instruction layer scored zero.** With the recall tool present but no router

@@ -110,13 +110,28 @@ Full per-run detail, including the negative results, is in [benchmarks/RESULTS.m
 methods/
   empirical-failure-cataloguing.md   the discipline, step by step, with hard gates
   fractional-knowledge-graph.md      the graph method, build-out and wiring
-skills/                              a worked output of method 1: one router, six atomic skills
+skills/
+  trial-derived/                     the pack behind every headline number below
+  probe-only/                        the pack that regressed, kept as the negative result
 benchmarks/RESULTS.md                every measured run, including the ones that regressed
 ```
 
-`skills/` is what Empirical Failure Cataloguing actually produces. `using-trinity-skills` is the
-router, containing no task-solving logic of its own. The six leaves beside it are atomic,
-single-responsibility rules, each traceable to one specific observed probe finding.
+Both directories are outputs of Empirical Failure Cataloguing. They are kept apart because they
+were built differently and they scored differently, and that difference is the whole lesson of
+the method.
+
+**`skills/trial-derived/`** is the pack that produced the 94.3% and 78.6% results in the table
+above. Router `using-benchmark-skills`, ten atomic leaves. Every leaf closes one silent-failure
+mode that was observed in real judged trial data, then fixed and re-measured.
+
+**`skills/probe-only/`** is the pack built entirely from exhaustive API probing, with no
+trial-and-fix loop behind it. Router `using-trinity-skills`, six atomic leaves. It was smoke
+tested at a single trial, looked complete, and then scored 0.543 on a full 140-trial run against
+0.79 for the trial-derived pack on the same model the same week. It is published here because
+the failure is the point. Probing finds the traps a system sets. It does not find the traps an
+agent sets for itself, and a green checklist says nothing about the second kind.
+
+If you are reusing one of these, reuse `trial-derived/`.
 
 ---
 
@@ -128,7 +143,7 @@ call. There is no runtime to install.
 ```bash
 harbor run -p tasks -a claude-code -m <model> \
   --mcp-config mcp.json \
-  --skill ./skills \
+  --skill ./skills/trial-derived \
   -k 10 -n 3 --yes
 ```
 

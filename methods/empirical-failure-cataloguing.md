@@ -216,9 +216,8 @@ Start a new one the moment a genuinely new class appears. There is no scheduled 
 
 ## 6. A worked output
 
-`../skills/probe-only/` is a real catalogue produced against a Jira-shaped PM system, a
-Salesforce-shaped CRM, and a Drive-shaped file server, using Step 1 probing alone. One router,
-six atomic rules:
+Step 1 probing, run against a Jira-shaped PM system, a Salesforce-shaped CRM and a Drive-shaped
+file server, produced these six traps:
 
 | Rule | Trap |
 |---|---|
@@ -231,7 +230,7 @@ six atomic rules:
 
 Every one of the six returns a well-formed 200. None of them announce themselves.
 
-That catalogue is complete on class (a) and empty on class (b), and it regressed at full scale
-because of it. `../skills/trial-derived/` is the pack that went through the whole loop, Step 1
-probing plus the trial-and-fix cycle in Step 3, and it is the one behind the measured results.
-Read the two side by side. The gap between them is the argument for the small-batch gate.
+Encoded as six atomic rules, that catalogue was complete on class (a) and empty on class (b), and
+it regressed at full scale because of it. `../skills/` is the pack that went through the whole
+loop instead, Step 1 probing plus the trial-and-fix cycle in Step 3, and it is the one behind the
+measured results. The gap between the two runs is the argument for the small-batch gate.

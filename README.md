@@ -110,28 +110,21 @@ Full per-run detail, including the negative results, is in [benchmarks/RESULTS.m
 methods/
   empirical-failure-cataloguing.md   the discipline, step by step, with hard gates
   fractional-knowledge-graph.md      the graph method, build-out and wiring
-skills/
-  trial-derived/                     the pack behind every headline number below
-  probe-only/                        the pack that regressed, kept as the negative result
+skills/                              the pack behind every headline number below
 benchmarks/RESULTS.md                every measured run, including the ones that regressed
 ```
 
-Both directories are outputs of Empirical Failure Cataloguing. They are kept apart because they
-were built differently and they scored differently, and that difference is the whole lesson of
-the method.
+`skills/` is what Empirical Failure Cataloguing actually produces, and it is the exact pack that
+produced the 94.3% and 78.6% results in the table above. `using-benchmark-skills` is the router,
+containing no task-solving logic of its own. The ten atomic leaves beside it are
+single-responsibility rules, each one closing a silent-failure mode that was observed in real
+judged trial data, then fixed and re-measured.
 
-**`skills/trial-derived/`** is the pack that produced the 94.3% and 78.6% results in the table
-above. Router `using-benchmark-skills`, ten atomic leaves. Every leaf closes one silent-failure
-mode that was observed in real judged trial data, then fixed and re-measured.
-
-**`skills/probe-only/`** is the pack built entirely from exhaustive API probing, with no
-trial-and-fix loop behind it. Router `using-trinity-skills`, six atomic leaves. It was smoke
-tested at a single trial, looked complete, and then scored 0.543 on a full 140-trial run against
-0.79 for the trial-derived pack on the same model the same week. It is published here because
-the failure is the point. Probing finds the traps a system sets. It does not find the traps an
-agent sets for itself, and a green checklist says nothing about the second kind.
-
-If you are reusing one of these, reuse `trial-derived/`.
+An earlier pack for the same benchmark was built from exhaustive API probing alone, with no
+trial-and-fix loop behind it. It looked complete and it regressed at full scale. It is not
+shipped here, but the run is written up in
+[benchmarks/RESULTS.md](benchmarks/RESULTS.md), because it is the reason Method 1 treats the
+small-batch checkpoint as a hard gate.
 
 ---
 
@@ -143,7 +136,7 @@ call. There is no runtime to install.
 ```bash
 harbor run -p tasks -a claude-code -m <model> \
   --mcp-config mcp.json \
-  --skill ./skills/trial-derived \
+  --skill ./skills \
   -k 10 -n 3 --yes
 ```
 
